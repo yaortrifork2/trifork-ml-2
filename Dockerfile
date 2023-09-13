@@ -12,7 +12,7 @@ COPY --chown=gradle:gradle .gitignore .gitignore
 RUN gradle clean
 RUN gradle build  --info --stacktrace
 
-FROM openjdk:20.0-jdk-slim
+FROM openjdk:20-jdk-slim
 EXPOSE 80
 
 COPY --from=build /app/build/libs /app/libs
