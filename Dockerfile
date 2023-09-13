@@ -19,4 +19,4 @@ COPY --from=build /app/build/libs /app/libs
 WORKDIR /app/libs
 
 ENTRYPOINT java -XshowSettings:system -XX:+PreferContainerQuotaForCPUCount -XX:MaxRAMPercentage=85 \
-                -jar nedgia-ml-api-0.0.1-SNAPSHOT.jar
+                -jar nedgia-ml-api-1.0-SNAPSHOT.jar
