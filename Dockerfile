@@ -1,0 +1,22 @@
+FROM hub.hamdocker.ir/library/gradle:8.3-jdk20 AS build
+LABEL maintainer="yaor@trifork.com"
+
+WORKDIR /app
+
+COPY --chown=gradle:gradle build.gradle .
+COPY --chown=gradle:gradle settings.gradle .
+COPY --chown=gradle:gradle src src
+COPY --chown=gradle:gradle .git .git
+COPY --chown=gradle:gradle .gitignore .gitignore
+
+RUN gradle clean
+RUN gradle build  --info --stacktrace
+
+FROM hub.hamdocker.ir/library/openjdk:20.0-jdk-slim
+EXPOSE 80
+
+COPY --from=build /app/build/libs /app/libs
+WORKDIR /app/libs
+
+ENTRYPOINT java -XshowSettings:system -XX:+PreferContainerQuotaForCPUCount -XX:MaxRAMPercentage=85 \
+                -jar nedgia-ml-api-0.0.1-SNAPSHOT.jar
