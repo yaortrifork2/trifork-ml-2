@@ -1,4 +1,4 @@
-FROM hub.hamdocker.ir/library/gradle:8.3-jdk20 AS build
+FROM gradle:8.3-jdk20 AS build
 LABEL maintainer="yaor@trifork.com"
 
 WORKDIR /app
@@ -12,7 +12,7 @@ COPY --chown=gradle:gradle .gitignore .gitignore
 RUN gradle clean
 RUN gradle build  --info --stacktrace
 
-FROM hub.hamdocker.ir/library/openjdk:20.0-jdk-slim
+FROM openjdk:20.0-jdk-slim
 EXPOSE 80
 
 COPY --from=build /app/build/libs /app/libs
