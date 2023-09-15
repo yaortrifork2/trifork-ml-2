@@ -16,6 +16,6 @@ import lombok.Value;
 @JsonNaming(SnakeCaseStrategy.class)
 public class PredictedConsumptionResponse {
 
-    Long predicted;
+    Double predicted;
 
 }

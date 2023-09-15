@@ -4,13 +4,12 @@ import com.trifork.nedgia.dto.ConsumptionAllowedParams;
 import com.trifork.nedgia.dto.ConsumptionAllowedResponse;
 import com.trifork.nedgia.dto.NextPredictedConsumptionParams;
 import com.trifork.nedgia.dto.PredictedConsumptionResponse;
+import com.trifork.nedgia.service.GasConsumptionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Random;
 
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -19,26 +18,22 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequiredArgsConstructor
 public class GasConsumptionController {
 
-    private final Random random;
+    GasConsumptionService gasConsumptionService;
 
     @GetMapping("next-predicted-consumption")
     public ResponseEntity<PredictedConsumptionResponse> nextPredictedConsumption(NextPredictedConsumptionParams params) {
 
-        PredictedConsumptionResponse response = PredictedConsumptionResponse.builder()
-                .predicted(random.nextLong())
-                .build();
-
+        PredictedConsumptionResponse response = gasConsumptionService.getPredictedConsumption(params.getTime());
         return ok().body(response);
+
     }
 
     @GetMapping("consumption-allowed")
     public ResponseEntity<ConsumptionAllowedResponse> consumptionAllowed(ConsumptionAllowedParams params) {
 
-        ConsumptionAllowedResponse response = ConsumptionAllowedResponse.builder()
-                .status(random.nextBoolean())
-                .build();
-
+        ConsumptionAllowedResponse response = gasConsumptionService.isConsumptionAllowed(params.getTime(), params.getConsumption());
         return ok().body(response);
+
     }
 
 }
