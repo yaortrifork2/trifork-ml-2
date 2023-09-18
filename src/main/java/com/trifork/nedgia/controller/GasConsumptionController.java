@@ -18,7 +18,7 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequiredArgsConstructor
 public class GasConsumptionController {
 
-    GasConsumptionService gasConsumptionService;
+    private final GasConsumptionService gasConsumptionService;
 
     @GetMapping("next-predicted-consumption")
     public ResponseEntity<PredictedConsumptionResponse> nextPredictedConsumption(NextPredictedConsumptionParams params) {
