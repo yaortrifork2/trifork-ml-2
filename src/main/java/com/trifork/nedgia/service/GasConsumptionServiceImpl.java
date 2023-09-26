@@ -2,6 +2,7 @@ package com.trifork.nedgia.service;
 
 import com.trifork.nedgia.dto.ConsumptionAllowedResponse;
 import com.trifork.nedgia.dto.PredictedConsumptionResponse;
+import com.trifork.nedgia.repository.GasConsumptionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,10 +20,13 @@ import static java.util.Optional.of;
 public class GasConsumptionServiceImpl implements GasConsumptionService {
 
     private final Random random;
+    private final GasConsumptionRepository repository;
 
     @Override
     public PredictedConsumptionResponse getPredictedConsumption(Long time) {
         Double predicted = random.nextGaussian() * 4527 + 28534;
+
+        repository.save(time, predicted);
 
         return PredictedConsumptionResponse.builder()
                 .predicted(predicted)
@@ -32,7 +36,9 @@ public class GasConsumptionServiceImpl implements GasConsumptionService {
 
     @Override
     public ConsumptionAllowedResponse isConsumptionAllowed(Long time, Double consumption) {
-        Double predicted = random.nextGaussian() * 4527 + 28534;
+
+        Double predicted = repository.get(time).orElse(random.nextGaussian() * 4527 + 28534);
+        repository.save(time, predicted);
 
         Boolean status = of(predicted)
                 .filter(p -> abs(p - consumption) < 5000)
