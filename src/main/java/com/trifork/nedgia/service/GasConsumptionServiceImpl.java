@@ -24,7 +24,9 @@ public class GasConsumptionServiceImpl implements GasConsumptionService {
 
     @Override
     public PredictedConsumptionResponse getPredictedConsumption(Long time) {
-        Double predicted = random.nextGaussian() * 4527 + 28534;
+
+        Double predicted = repository.get(time)
+                .orElse(random.nextGaussian() * 4527 + 28534);
 
         repository.save(time, predicted);
 
@@ -37,10 +39,14 @@ public class GasConsumptionServiceImpl implements GasConsumptionService {
     @Override
     public ConsumptionAllowedResponse isConsumptionAllowed(Long time, Double consumption) {
 
-        Double predicted = repository.get(time).orElse(random.nextGaussian() * 4527 + 28534);
-        repository.save(time, predicted);
+        Double finalPred = repository.get(time)
+                .orElseGet(() -> {
+                    Double predicted = random.nextGaussian() * 4527 + 28534;
+                    repository.save(time, predicted);
+                    return predicted;
+                });
 
-        Boolean status = of(predicted)
+        Boolean status = of(finalPred)
                 .filter(p -> abs(p - consumption) < 5000)
                 .map(x -> TRUE)
                 .orElse(FALSE);
