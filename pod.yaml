@@ -36,3 +36,16 @@ spec:
             limits:
               memory: "250Mi"
               cpu: "100m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: trifork-ml
+  labels:
+    app: trifork-ml
+spec:
+  ports:
+    - name: http
+      port: 10000
+  selector:
+    app: trifork-ml
