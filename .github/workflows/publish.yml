@@ -19,5 +19,4 @@ jobs:
       - name: Hello World inside Build
         run: |
           docker build . --tag ghcr.io/yaortri/trifork-ml:latest
-          docker run ghcr.io/yaortri/trifork-ml:latest
           docker push ghcr.io/yaortri/trifork-ml:latest
