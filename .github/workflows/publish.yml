@@ -1,0 +1,21 @@
+name: publish
+
+on: [push]
+
+jobs:
+  publish-docker-image:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build the trifork-ml Docker image
+        run: |
+          echo $CR_PAT | docker login ghcr.io -u orouskhani.trifork@gmail.com --password-stdin
+        env:
+          CR_PAT: ${{ secrets.CR_PAT }}
+
+      - name: Hello World inside Build
+        run: |
+          docker build . --tag ghcr.io/yaortri/trifork-ml:latest
+          docker run ghcr.io/yaortri/trifork-ml:latest
+          docker push ghcr.io/yaortri/trifork-ml:latest
