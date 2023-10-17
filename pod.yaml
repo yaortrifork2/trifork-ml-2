@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trifork-ml
+  labels:
+    app: trifork-ml
+spec:
+  selector:
+    matchLabels:
+      app: trifork-ml
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 1
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: trifork-ml
+    spec:
+      containers:
+        - image: dev.azure.com/invokersdev/TSE%20Internal/_git/nedgia-ml-api:latest
+          imagePullPolicy: Always
+          name: mock
+          ports:
+            - name: http
+              containerPort: 10000
+          env:
+            - name: DEBUG
+              value: "true"
+            - name: RENEWCERT_JOB_CRON
+              value: "00 00 */12 * * *"
+          volumeMounts:
+            - mountPath: "/app/keys"
+              name: mock-volume
+          resources:
+            requests:
+              memory: "150Mi"
+              cpu: "50m"
+            limits:
+              memory: "250Mi"
+              cpu: "100m"
+      volumes:
+        - name: mock-volume
+          persistentVolumeClaim:
+            claimName: trifork-ml
