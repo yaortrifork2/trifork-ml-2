@@ -29,9 +29,6 @@ spec:
               value: "true"
             - name: RENEWCERT_JOB_CRON
               value: "00 00 */12 * * *"
-          volumeMounts:
-            - mountPath: "/app/keys"
-              name: mock-volume
           resources:
             requests:
               memory: "150Mi"
@@ -39,7 +36,3 @@ spec:
             limits:
               memory: "250Mi"
               cpu: "100m"
-      volumes:
-        - name: mock-volume
-          persistentVolumeClaim:
-            claimName: trifork-ml
