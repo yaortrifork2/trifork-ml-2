@@ -18,7 +18,7 @@ spec:
         app: trifork-ml
     spec:
       containers:
-        - image: dev.azure.com/invokersdev/TSE%20Internal/_git/nedgia-ml-api:latest
+        - image: https://github.com/yaortri/trifork-ml:latest
           imagePullPolicy: Always
           name: mock
           ports:
