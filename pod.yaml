@@ -18,7 +18,7 @@ spec:
         app: trifork-ml
     spec:
       containers:
-        - image: https://github.com/yaortri/trifork-ml:latest
+        - image: ghcr.io/yaortri/trifork-ml:latest
           imagePullPolicy: Always
           name: mock
           ports:
