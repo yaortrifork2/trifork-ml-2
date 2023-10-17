@@ -8,11 +8,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Build the trifork-ml Docker image
-        run: |
-          echo $CR_PAT | docker login ghcr.io -u orouskhani.trifork@gmail.com --password-stdin
-        env:
-          CR_PAT: ${{ secrets.CR_PAT }}
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+            registry: ghcr.io
+            username: ${{ github.actor }}
+            password: ${{ secrets.CR_PAT }}
 
       - name: Hello World inside Build
         run: |
