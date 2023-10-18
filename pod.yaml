@@ -23,7 +23,7 @@ spec:
           name: mock
           ports:
             - name: http
-              containerPort: 80
+              containerPort: 8080
           env:
             - name: DEBUG
               value: "true"
@@ -47,5 +47,6 @@ spec:
   ports:
     - name: http
       port: 10000
+      targetPort: 8080
   selector:
     app: trifork-ml
