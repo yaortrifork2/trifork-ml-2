@@ -3,3 +3,5 @@ logging:
     org:
       springframework:
         web: Info
+        boot:
+          autoconfigure: ERROR
