@@ -16,7 +16,7 @@ import static org.springframework.boot.SpringApplication.run;
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class, ManagementWebSecurityAutoConfiguration.class})
 public class NedgiaMlApiApplication {
     public static void main(String[] args) {
-        System.out.println("Hello from Nedgia World 3!!!!");
+        System.out.println("Hello from Nedgia World 4!!!!");
         run(NedgiaMlApiApplication.class, args);
     }
 }
