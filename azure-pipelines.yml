@@ -20,4 +20,4 @@ steps:
     connectionType: 'kubernetesServiceConnection'
     kubernetesServiceConnection: 'Kyma'
     namespace: 'bcn-sit-2023'
-    manifests: 'pod.yml'
+    manifests: 'pod.yaml'
